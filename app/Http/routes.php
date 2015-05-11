@@ -23,7 +23,7 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
-Route::group(['prefix' => 'api/v1','namespace' => 'Api\auth'], function()
+Route::group(['prefix' => 'api/v1','namespace' => 'Api\v1\auth'], function()
 {
 	Route::get('user/auth',function(Request $request){
 		if(empty($request->route('username')) || empty($request->route('password')))
@@ -34,7 +34,7 @@ Route::group(['prefix' => 'api/v1','namespace' => 'Api\auth'], function()
 	Route::post('user/auth', ['as' => 'auth', 'uses' => 'AuthController@run']);	
 });
 
-Route::group(['prefix' => 'api/v1','namespace' => 'Api\message'], function()
+Route::group(['prefix' => 'api/v1','namespace' => 'Api\v1\message'], function()
 {
 	Route::get('message/send',function(Request $request){
 		if(empty($request->route('receiver')) || empty($request->route('sender')) || empty($request->route('message')))
