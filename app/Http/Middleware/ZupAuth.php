@@ -19,14 +19,23 @@ class ZupAuth {
 	public function handle(Request $request, Closure $next)
 	{
 		$username = $request->input('username');
+		$email = $request->input('email');
+		$login = !empty($username) ? $username : $email;
 		$password = $request->input('password');
 
-		if(empty($username) || empty($password)){
-			return response(["message"=>"Username and password required!","status"=>401]);
+		if(empty($login) || empty($password)){
+			return response(["message"=>"Username/Email and password required!","status"=>401]);
 		}else{
-			if(!Auth::attempt(['username'=>$username,'password'=>$password], true)){
-				return response(["message"=>"Incorrect username or password!","status"=>401]);
+			if (!filter_var($login, FILTER_VALIDATE_EMAIL)){
+				if(!Auth::attempt(['username'=>$login,'password'=>$password], true) && !Auth::attempt(['email'=>$login,'password'=>$password], true)){
+					return response()->json(["message"=>"Incorrect username/email or password!","status"=>401]);
+				}
+			}else{
+				if(!Auth::attempt(['username'=>$login,'password'=>$password], true) && !Auth::attempt(['email'=>$login,'password'=>$password], true)){
+					return response()->json(["message"=>"Incorrect username/email or password!","status"=>401]);
+				}
 			}
+			
 		}
 
 		return $next($request);		
