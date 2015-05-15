@@ -64,7 +64,7 @@ class MessageController extends Controller {
 		return $count == 0 ? false : true;
 	}
 
-	public function get_message(Request $request){
+	public function get_all_message(Request $request){
 		$receiver = $request->input('user_id');
 		if(empty($receiver)){
 			return response()->json(["message"=>"Can't fetch messages, receiver's id is missing!","status"=>401]);
