@@ -49,4 +49,8 @@ Route::group(['prefix' => 'api/v1','namespace' => 'Api\v1\message'], function()
 		}
 	});
 	Route::post('message/send', ['as' => 'send', 'uses' => 'MessageController@send_message']);
+
+	Route::get('message/getAll', ['as' => 'getAll', 'uses' => 'MessageController@get_message']);
+	Route::get('message/getUnreadCount', ['as' => 'getUnreadCount', 'uses' => 'MessageController@get_unread_message_count']);
+	Route::get('message/read', ['as' => 'read', 'uses' => 'MessageController@read_message']);
 });
