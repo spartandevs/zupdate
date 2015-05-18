@@ -42,13 +42,13 @@ Route::group(['prefix' => 'api/v1','namespace' => 'Api\v1\auth'], function()
 
 Route::group(['prefix' => 'api/v1','namespace' => 'Api\v1\message'], function()
 {
-	Route::get('message/send',function(Request $request){
+	Route::get('message/compose',function(Request $request){
 		if(empty($request->route('receiver')) || empty($request->route('sender')) || empty($request->route('message')))
 		{
 			return response()->json(["message"=>"All fields are required!","status"=>401]);
 		}
 	});
-	Route::post('message/send', ['as' => 'send', 'uses' => 'MessageController@send_message']);
+	Route::post('message/compose', ['as' => 'compose', 'uses' => 'MessageController@send_message']);
 
 	Route::get('message/getAll', ['as' => 'getAll', 'uses' => 'MessageController@get_all_message']);
 	Route::get('message/getUnreadCount', ['as' => 'getUnreadCount', 'uses' => 'MessageController@get_unread_message_count']);
